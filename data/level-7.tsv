@@ -1,0 +1,49 @@
+ID	Domain	kingdom	Phylum	Class	Order	Family	Genus	Species	Ig18629	Ig18630	taxID
+k__Bacteria;p__Actinobacteria;c__Coriobacteriia;o__Coriobacteriales;f__Coriobacteriaceae;g__Adlercreutzia;s__	Bacteria	Bacillati	Actinomycetota	Coriobacteriia	Eggerthellales	Eggerthellaceae	Adlercreutzia		17	24	447020
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__;g__;s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales				76	372	171549
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Bacteroidaceae	Bacteroides		177	176	816
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Bacteroidaceae	Bacteroides		2129	2490	816
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Bacteroidaceae;g__Bacteroides;s__acidifaciens	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Bacteroidaceae	Bacteroides	acidifaciens	1563	1448	85831
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Porphyromonadaceae;g__Parabacteroides;s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Tannerellaceae	Parabacteroides		1000	531	375288
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Porphyromonadaceae;g__Parabacteroides;s__distasonis	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Tannerellaceae	Parabacteroides	distasonis	65	64	823
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Prevotellaceae;g__Prevotella;s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Prevotellaceae	Prevotella		696	571	838
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Rikenellaceae;__;__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Rikenellaceae			16	6	171550
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__Rikenellaceae;g__;s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Rikenellaceae			9573	6386	171550
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__S24-7;g__;s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Muribaculaceae			28174	19973	2005473
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__[Odoribacteraceae];g__Butyricimonas;s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Odoribacteraceae	Butyricimonas		126	12	574697
+k__Bacteria;p__Bacteroidetes;c__Bacteroidia;o__Bacteroidales;f__[Paraprevotellaceae];g__[Prevotella];s__	Bacteria	Pseudomonadati	Bacteroidota	Bacteroidia	Bacteroidales	Prevotellaceae	Paraprevotella		1761	3096	577309
+k__Bacteria;p__Cyanobacteria;c__Chloroplast;o__Streptophyta;f__;g__;s__	Bacteria		Cyanobacteriota	Chloroplast	Streptophyta				27	28	
+k__Bacteria;p__Deferribacteres;c__Deferribacteres;o__Deferribacterales;f__Deferribacteraceae;g__Mucispirillum;s__schaedleri	Bacteria	Pseudomonadati	Deferribacterota	Deferribacteres	Deferribacterales	Mucispirillaceae	Mucispirillum	schaedleri	1870	3505	248039
+k__Bacteria;p__Firmicutes;c__Bacilli;o__Lactobacillales;f__Lactobacillaceae;g__Lactobacillus;s__	Bacteria	Bacillati	Bacillota	Bacilli	Lactobacillales	Lactobacillaceae	Lactobacillus		621	128	1578
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;__;__;__	Bacteria	Bacillati	Bacillota	Clostridia	Clostridiales				4544	5241	186802
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__;g__;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales  				12121	13466	186802
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Christensenellaceae;g__;s__	Bacteria	Bacillati	Bacillota	Clostridia	Christensenellales	Christensenellaceae			2	3	3082768
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Clostridiaceae;g__Clostridium;s__	Bacteria	Bacillati	Bacillota	Clostridia	Clostridiales	Clostridiaceae	Clostridium		4	0	1485
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Dehalobacteriaceae;g__Dehalobacterium;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Peptococcaceae	Dehalobacterium		119	200	51514
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;__;__	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae			1951	4447	186803
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__;s__	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae			6214	7926	186803
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__Clostridium;__	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae	Tyzzerella		582	757	1506577
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__Clostridium;s__colinum	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae	Tyzzerella	colinum	11	0	36835
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__Coprococcus;s__	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae	Coprococcus		418	62	33042
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__Dorea;s__	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae	Dorea		28	39	189330
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__Roseburia;s__	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae	Roseburia		16	11	841
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Lachnospiraceae;g__[Ruminococcus];s__gnavus	Bacteria	Bacillati	Bacillota	Clostridia	Lachnospirales	Lachnospiraceae	Mediterraneibacter	gnavus	912	685	33038
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Peptococcaceae;g__;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Peptococcaceae			12	20	186807
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Ruminococcaceae;__;__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Oscillospiraceae			125	100	216572
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Ruminococcaceae;g__;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Ruminococcaceae			75	140	216572
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Ruminococcaceae;g__Anaerotruncus;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Oscillospiraceae	Anaerotruncus		775	1146	244127
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Ruminococcaceae;g__Butyricicoccus;s__pullicaecorum	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Oscillospiraceae	Butyricicoccus	pullicaecorum	133	106	501571
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Ruminococcaceae;g__Oscillospira;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Oscillospiraceae	Oscillospira		5493	6806	119852
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__Ruminococcaceae;g__Ruminococcus;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Oscillospiraceae	Ruminococcus		573	894	1263
+k__Bacteria;p__Firmicutes;c__Clostridia;o__Clostridiales;f__[Mogibacteriaceae];g__;s__	Bacteria	Bacillati	Bacillota	Clostridia	Eubacteriales	Maliibacteriaceae			41	12	543314
+k__Bacteria;p__Firmicutes;c__Erysipelotrichi;o__Erysipelotrichales;f__Erysipelotrichaceae;g__;s__	Bacteria	Bacillati	Bacillota	Erysipelotrichia	Erysipelotrichales	Erysipelotrichaceae			11	50	128827
+k__Bacteria;p__Proteobacteria;c__Alphaproteobacteria;o__Rickettsiales;f__mitochondria;__;__	Bacteria	Pseudomonadati	Pseudomonadota	Alphaproteobacteria	Rickettsiales	mitochondria			74	122	
+k__Bacteria;p__Proteobacteria;c__Betaproteobacteria;o__Burkholderiales;f__Alcaligenaceae;g__Sutterella;s__	Bacteria	Pseudomonadati	Pseudomonadota	Betaproteobacteria	Burkholderiales	Sutterellaceae	Sutterella		55	76	40544
+k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__;s__	Bacteria	Pseudomonadati	Thermodesulfobacteriota	Desulfovibrionia	Desulfovibrionales	Desulfovibrionaceae			616	887	194924
+k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__Bilophila;s__	Bacteria	Pseudomonadati	Thermodesulfobacteriota	Desulfovibrionia	Desulfovibrionales	Desulfovibrionaceae	Bilophila		87	54	35832
+k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__Desulfovibrio;s__	Bacteria	Pseudomonadati	Thermodesulfobacteriota	Desulfovibrionia	Desulfovibrionales	Desulfovibrionaceae	Desulfovibrio		47	47	872
+k__Bacteria;p__Proteobacteria;c__Deltaproteobacteria;o__Desulfovibrionales;f__Desulfovibrionaceae;g__Desulfovibrio;s__C21_c20	Bacteria	Pseudomonadati	Thermodesulfobacteriota	Desulfovibrionia	Desulfovibrionales	Desulfovibrionaceae	Desulfovibrio		37	13	872
+k__Bacteria;p__Tenericutes;c__Mollicutes;o__Anaeroplasmatales;f__Anaeroplasmataceae;g__Anaeroplasma;s__	Bacteria	Bacillati	Mycoplasmatota	Mollicutes	Anaeroplasmatales	Anaeroplasmataceae	Anaeroplasma		256	960	2086
+k__Bacteria;p__Tenericutes;c__Mollicutes;o__RF39;f__;g__;s__	Bacteria	Bacillati	Mycoplasmatota	Mollicutes	RF39				551	36	31969
+SampleID_sorted	SampleID_sorted								1:Ig18629	2:Ig18630	
+Description_sorted	Description_sorted								1:cont	2:stress	
