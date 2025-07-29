@@ -7,10 +7,11 @@
 # あなたのGitHubユーザー名/リポジトリ名を指定
 GH_USER="schaedleri"
 GH_REPO="BLING"
+RELEASE_TAG="v1.0.0" # DBファイルなどを置いているGitHub Releaseのタグ名
 # ---------------------------------------------------------
 
 # GitHub RawのベースURL
-BASE_URL="https://raw.githubusercontent.com/${GH_USER}/${GH_REPO}/main"
+BASE_URL="https://raw.githubusercontent.com/${GH_USER}/${GH_REPO}/master"
 
 # ダウンロードするファイルリスト
 ROOT_FILES=(
@@ -35,13 +36,16 @@ DATA_FILES=(
     "taxonomy.tsv"
 )
 DONE_FILES=(
-    "go.obo"
+    "setup.done"
 )
 
-# InterProScanの情報
-IPRSCAN_URL="https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.75-106.0/interproscan-5.75-106.0-64-bit.tar.gz"
+# 外部ツールの情報
 IPRSCAN_FILE="interproscan-5.75-106.0-64-bit.tar.gz"
 TOOLS_DIR="tools"
+
+# BLAST DBの情報
+BLAST_DB_FILE="bacteria_strain_taxid_DB.tar.gz"
+BLAST_DB_DIR="DB"
 
 
 # --- セットアップ開始 ---
@@ -50,12 +54,12 @@ echo "リポジトリ: https://github.com/${GH_USER}/${GH_REPO}"
 echo ""
 
 # 1. ディレクトリの作成
-echo "ディレクトリを作成します: data, scripts, done, tools"
-mkdir -p data scripts done "${TOOLS_DIR}"
+echo "ディレクトリを作成します: data, scripts, done, tools, DB"
+mkdir -p data scripts done "${TOOLS_DIR}" "${BLAST_DB_DIR}"
 echo ""
 
-# 2. ファイルのダウンロード
-echo "ファイルをダウンロードします..."
+# 2. スクリプト等のダウンロード
+echo "スクリプトとデータをダウンロードします..."
 
 # ルートファイルのダウンロード
 for file in "${ROOT_FILES[@]}"; do
@@ -100,6 +104,7 @@ echo ""
 
 # 3. ツール(InterProScan)のダウンロードと展開
 echo "ツール(InterProScan)をダウンロードします... (サイズが大きいため時間がかかります)"
+IPRSCAN_URL="https://github.com/${GH_USER}/${GH_REPO}/releases/download/${RELEASE_TAG}/${IPRSCAN_FILE}"
 curl -L "${IPRSCAN_URL}" -o "${TOOLS_DIR}/${IPRSCAN_FILE}"
 if [ $? -ne 0 ]; then
     echo "エラー: InterProScan のダウンロードに失敗しました。"
@@ -117,7 +122,27 @@ echo "ダウンロードした圧縮ファイルを削除します..."
 rm "${TOOLS_DIR}/${IPRSCAN_FILE}"
 echo ""
 
-# 4. 実行権限の付与
+# 4. BLAST DBのダウンロードと展開
+echo "BLAST DBをダウンロードします..."
+DB_URL="https://github.com/${GH_USER}/${GH_REPO}/releases/download/${RELEASE_TAG}/${BLAST_DB_FILE}"
+curl -L "${DB_URL}" -o "${BLAST_DB_DIR}/${BLAST_DB_FILE}"
+if [ $? -ne 0 ]; then
+    echo "エラー: BLAST DB のダウンロードに失敗しました。"
+    exit 1
+fi
+
+echo "BLAST DBを展開します..."
+tar -xzvf "${BLAST_DB_DIR}/${BLAST_DB_FILE}" -C "${BLAST_DB_DIR}/"
+if [ $? -ne 0 ]; then
+    echo "エラー: BLAST DB の展開に失敗しました。"
+    exit 1
+fi
+
+echo "ダウンロードした圧縮ファイルを削除します..."
+rm "${BLAST_DB_DIR}/${BLAST_DB_FILE}"
+echo ""
+
+# 5. 実行権限の付与
 echo "スクリプトに実行権限を付与します..."
 chmod +x *.pl *.py
 chmod +x scripts/*.pl
