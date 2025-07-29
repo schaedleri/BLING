@@ -5,8 +5,8 @@
 
 # --- 設定 (この部分をあなたの環境に合わせて変更してください) ---
 # あなたのGitHubユーザー名/リポジトリ名を指定
-GH_USER="your-username"
-GH_REPO="your-repo-name"
+GH_USER="schaedleri"
+GH_REPO="BLING"
 # ---------------------------------------------------------
 
 # GitHub RawのベースURL
@@ -17,6 +17,7 @@ ROOT_FILES=(
     "run_route_blastcluster.pl"
     "run_route_interpro.pl"
     "run_route_preprocess.pl"
+    "get_level7.py"
 )
 SCRIPT_FILES=(
     "microbiome_assembly.pl"
@@ -30,6 +31,10 @@ SCRIPT_FILES=(
     "microbiome_run_interpro.pl"
 )
 DATA_FILES=(
+    "go.obo"
+    "taxonomy.tsv"
+)
+DONE_FILES=(
     "go.obo"
 )
 
@@ -73,6 +78,17 @@ for file in "${DATA_FILES[@]}"; do
     curl -fsSL -o "data/${file}" "${BASE_URL}/data/${file}"
     if [ $? -ne 0 ]; then
         echo "エラー: data/${file} のダウンロードに失敗しました。"
+        exit 1
+    fi
+done
+echo ""
+
+# doneファイルのダウンロード
+for file in "${DONE_FILES[@]}"; do
+    echo "  - done/${file}"
+    curl -fsSL -o "done/${file}" "${BASE_URL}/done/${file}"
+    if [ $? -ne 0 ]; then
+        echo "エラー: done/${file} のダウンロードに失敗しました。"
         exit 1
     fi
 done
