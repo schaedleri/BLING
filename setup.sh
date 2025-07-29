@@ -8,10 +8,13 @@
 GH_USER="schaedleri"
 GH_REPO="BLING"
 RELEASE_TAG="v1.0.0" # DBファイルなどを置いているGitHub Releaseのタグ名
+
+# 外部ツールのURL
+IPRSCAN_URL="https://ftp.ebi.ac.uk/pub/software/unix/iprscan/5/5.75-106.0/interproscan-5.75-106.0-64-bit.tar.gz"
 # ---------------------------------------------------------
 
 # GitHub RawのベースURL
-BASE_URL="https://raw.githubusercontent.com/${GH_USER}/${GH_REPO}/master"
+BASE_URL="https://raw.githubusercontent.com/${GH_USER}/${GH_REPO}/main"
 
 # ダウンロードするファイルリスト
 ROOT_FILES=(
@@ -39,11 +42,9 @@ DONE_FILES=(
     "setup.done"
 )
 
-# 外部ツールの情報
+# ファイル名とディレクトリ名の定義
 IPRSCAN_FILE="interproscan-5.75-106.0-64-bit.tar.gz"
 TOOLS_DIR="tools"
-
-# BLAST DBの情報
 BLAST_DB_FILE="bacteria_strain_taxid_DB.tar.gz"
 BLAST_DB_DIR="DB"
 
@@ -103,8 +104,7 @@ done
 echo ""
 
 # 3. ツール(InterProScan)のダウンロードと展開
-echo "ツール(InterProScan)をダウンロードします... (サイズが大きいため時間がかかります)"
-IPRSCAN_URL="https://github.com/${GH_USER}/${GH_REPO}/releases/download/${RELEASE_TAG}/${IPRSCAN_FILE}"
+echo "ツール(InterProScan)を公式サイトからダウンロードします... (サイズが大きいため時間がかかります)"
 curl -L "${IPRSCAN_URL}" -o "${TOOLS_DIR}/${IPRSCAN_FILE}"
 if [ $? -ne 0 ]; then
     echo "エラー: InterProScan のダウンロードに失敗しました。"
@@ -123,7 +123,7 @@ rm "${TOOLS_DIR}/${IPRSCAN_FILE}"
 echo ""
 
 # 4. BLAST DBのダウンロードと展開
-echo "BLAST DBをダウンロードします..."
+echo "BLAST DBをGitHub Releasesからダウンロードします..."
 DB_URL="https://github.com/${GH_USER}/${GH_REPO}/releases/download/${RELEASE_TAG}/${BLAST_DB_FILE}"
 curl -L "${DB_URL}" -o "${BLAST_DB_DIR}/${BLAST_DB_FILE}"
 if [ $? -ne 0 ]; then
