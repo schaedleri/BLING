@@ -79,5 +79,3 @@ If you use SyNQA in your research, please cite our paper:
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ```
-
-もし「ここをもっと目立たせたい」「このファイル名も構造ツリーに追加したい」などのご希望があれば、お気軽にお申し付けください。
