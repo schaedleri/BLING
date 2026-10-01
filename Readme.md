@@ -54,13 +54,8 @@ required inputs and produced outputs.
 ### Reporting utilities (built on top of the pipeline output)
 
 These are not part of the core annotation pipeline above, but operate on its output to
-produce the summary figures and statistics reported in the manuscript.
+produce the summary statistics reported in the manuscript.
 
-- `aggregate_gmm_thresholds.py` — collects the per-genome `gmm_threshold_summary.tsv` files
-  written under every taxonomic group's `operon_analysis/` directory into one deduplicated,
-  community-wide table (one row per unique genome), flagging genomes with a degenerate GMM
-  fit (`Optimal_K == 1`) rather than excluding them. Used to produce the genome-wide GMM
-  threshold distribution figure.
 - `microbiome_summary_ver2.py` / `microbiome_summary_fixed.py` — compute the community-wide
   annotation-coverage statistics (baseline GO coverage, newly annotated proteins contributed
   by InterPro, eggNOG, and operon-based propagation) for the GMM and fixed-threshold methods,
@@ -140,10 +135,6 @@ python3 run_enrichment_production.py \
     --base-dir /path/to/project --sample-dir level-7 \
     --taxa Species_example --annotation-file all --cpu 8
 
-# Reporting: aggregate GMM thresholds across all genomes
-python3 aggregate_gmm_thresholds.py \
-    --sample-dir /path/to/project/level-7 \
-    --output all_genomes_gmm_threshold_summary.tsv
 
 # Reporting: community-wide annotation coverage statistics
 python3 microbiome_summary_ver2.py --base-dir /path/to/project/level-7 \
@@ -169,10 +160,10 @@ Run any script with `--help` for the full list of options.
   from direct sequence evidence (GBFF, InterProScan, eggNOG-mapper) are retained and used in
   enrichment analysis, but are not propagated across operon-like clusters.
 - The GMM operon-prediction threshold is fit independently per genome (see
-  `gmm_threshold_summary.tsv` under each taxon's `operon_analysis/` directory, or the
-  community-wide aggregation produced by `aggregate_gmm_thresholds.py`, for the distribution
-  of fitted thresholds across all genomes analyzed). Genomes for which the fit is degenerate
-  (a single Gaussian component selected) are flagged rather than silently excluded.
+  `gmm_threshold_summary.tsv` under each taxon's `operon_analysis/` directory for the
+  distribution of fitted thresholds across all genomes analyzed). Genomes for which the fit
+  is degenerate (a single Gaussian component selected) are flagged rather than silently
+  excluded.
 - The permitted COG-category mismatch pairs used during operon cluster refinement are
   hard-coded as the `ALLOWED_MISMATCH_PAIRS` constant in `predict_and_analyze_operons.py`.
 - Every propagated GO annotation carries a provenance identifier (`Evidence_Group_ID`) that
