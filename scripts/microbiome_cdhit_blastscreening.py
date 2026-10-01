@@ -167,6 +167,15 @@ def process_record(args):
             
         # Define the BLAST command
         outfmt = '6 qseqid qacc qstart qend qlen sseqid sacc sstart send slen staxids salltitles evalue bitscore qcovs pident ppos qseq sseq'
+        # === MODIFIED: added '-seg', 'yes' to mask low-complexity regions
+        # in the query before searching. Without this, a short stretch of
+        # low-complexity/repetitive sequence can produce a statistically
+        # significant but biologically meaningless hit, causing a protein
+        # to be misclassified as "not taxon-specific" based on nothing
+        # more than compositional bias rather than genuine homology. This
+        # matches the manuscript's stated Methods (Figure 2 legend /
+        # BLASTP parameter list, "seg = yes") and the equivalent option
+        # already used in the external BLAST step.
         cmd = [
             'blastp',
             '-query', tmp_fasta,
@@ -174,6 +183,7 @@ def process_record(args):
             '-task', 'blastp-fast',
             '-max_target_seqs', '10',
             '-evalue', '1e-10',
+            '-seg', 'yes',
             '-taxids', taxid_str,
             '-outfmt', outfmt,
             '-out', blast_out_file
