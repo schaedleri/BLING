@@ -31,7 +31,7 @@ required inputs and produced outputs.
         |
         v
 5. Functional annotation of all community proteins
-   5a. InterProScan (domain-based annotation)
+   5a. InterProScan (domain-based annotation)      -> microbiome_run_interpro.py
    5b. eggNOG-mapper (orthology-based annotation)  -> eggnog_process_ver2.py
         |
         v
@@ -40,15 +40,14 @@ required inputs and produced outputs.
    6b. Fixed-threshold (100 bp, exploratory alternative) -> microbiome_interval.py
         |
         v
-7. Aggregation into annotation + background files
+7. Aggregation into annotation + background files (GO terms expanded to their ancestors)
    7a. GMM-side aggregation     -> merge_GO.py
    7b. Fixed-side aggregation (also produces the NCBI-only and direct-evidence-only tiers)
                                 -> microbiome_merge_GO.py
         |
         v
 8. GO / InterPro enrichment analysis
-        -> run_enrichment_production.py (scriptable, CLI-driven)
-        -> run_enrichment_interactive.py (interactive, for exploratory use)
+        -> run_enrichment_v2.py
 ```
 
 ### Reporting utilities (built on top of the pipeline output)
@@ -81,18 +80,21 @@ produce the summary statistics reported in the manuscript.
 │   │                                          gmm_threshold_summary.tsv (fitted threshold per genome)
 │   └── interval_test/                       # fixed-threshold (100 bp) operon prediction output,
 │                                              incl. nonGO_GO_pairs100.tsv (propagated BP terms)
+├── temp_annotations/                                  # consolidated protein FASTA + eggNOG-mapper output
 ├── ncbi_go_gene.tsv / ncbi_background_list.txt        # Tier 1: NCBI/GBFF annotations only
 ├── direct_go_gene.tsv / direct_background_list.txt    # Tier 2: + InterPro + eggNOG, no propagation
 ├── fixed_go_gene.tsv / fixed_background_list.txt       # Tier 3: + fixed-threshold propagation
 ├── fixed_ipr_gene.tsv
 ├── GMM_go_gene.tsv / GMM_background_list.txt          # Tier 4: + GMM-based propagation
+├── GMM_ipr_gene.tsv
+├── enrichment_v2_manifest_<timestamp>.json            # options, log and results of each enrichment run
 └── */Enrichment_Analysis/                             # per-taxon enrichment results (Excel/TSV)
 ```
 
 ## Requirements
 
 - Python 3.10+
-- `scikit-learn`, `numpy`, `scipy`, `pandas`, `statsmodels`, `goatools`
+- `scikit-learn`, `numpy`, `scipy`, `pandas`, `matplotlib`, `statsmodels`, `goatools`, `openpyxl`
 - BLAST+ (`blastp`, `makeblastdb`, `blastdb_aliastool`)
 - CD-HIT
 - InterProScan
@@ -117,23 +119,26 @@ python3 cdhit_blastscreen.py --base-dir /path/to/project/level-7 --cpu 10 Genus_
 # 3. External (community-wide) BLASTP screen, against the same unified database
 python3 microbiome_externalblast_ver2.py --base-dir /path/to/project --target-dir level-7 Species_example
 
-# 4. eggNOG-mapper annotation (consolidated across all taxa in the sample)
+# 4. InterProScan annotation (all taxa of the sample; identical file names are computed once)
+python3 microbiome_run_interpro.py --base-dir /path/to/project/level-7 --cpu 8
+
+# 5. eggNOG-mapper annotation (consolidated across all taxa in the sample)
 python3 eggnog_process_ver2.py --base-dir /path/to/project/level-7 --cpu 10
 
-# 5. GMM-based operon prediction and GO propagation (Biological Process only)
+# 6. GMM-based operon prediction and GO propagation (Biological Process only)
 python3 predict_and_analyze_operons.py --base-dir /path/to/project/level-7 [options]
 
-# 6. Fixed-threshold (100 bp) operon prediction and GO propagation (Biological Process only)
+# 7. Fixed-threshold (100 bp) operon prediction and GO propagation (Biological Process only)
 python3 microbiome_interval.py --base-dir /path/to/project/level-7 [options]
 
-# 7. Aggregate annotation/background files
-python3 merge_GO.py --base-dir /path/to/project/level-7            # GMM side
+# 8. Aggregate annotation/background files
+python3 merge_GO.py --base-dir /path/to/project/level-7            # GMM side (--prefix GMM by default)
 python3 microbiome_merge_GO.py --base-dir /path/to/project/level-7  # fixed side + NCBI/direct tiers
 
-# 8. GO/InterPro enrichment analysis
-python3 run_enrichment_production.py \
+# 9. GO/InterPro enrichment analysis
+python3 run_enrichment_v2.py \
     --base-dir /path/to/project --sample-dir level-7 \
-    --taxa Species_example --annotation-file all --cpu 8
+    --taxa Species_example --annotation-file all
 
 
 # Reporting: community-wide annotation coverage statistics
@@ -143,7 +148,28 @@ python3 microbiome_summary_fixed.py --base-dir /path/to/project/level-7 \
     --background-file /path/to/project/level-7/fixed_background_list.txt
 ```
 
-Run any script with `--help` for the full list of options.
+Run any script with `--help` for the full list of options. The main options of the last three stages are:
+
+| Script | Option | Default | Meaning |
+|---|---|---|---|
+| `predict_and_analyze_operons.py` | `--max-k` | 8 | Largest number of GMM components tested (BIC) |
+| | `--outlier-threshold` | 1000 | Intergenic distances >= this value (bp) are excluded from the fit |
+| | `--min-threshold` | 20 | Lower bound of the distance threshold (bp) |
+| | `--min-distances` | 20 | Minimum number of intergenic distances needed to fit a genome |
+| | `--scan-start` | -50 | Smallest distance (bp) scanned when locating the threshold |
+| `microbiome_interval.py` | `--interval` | 100 | Maximum gap between adjacent genes of a cluster (bp) |
+| | `--max-dist` | 300 | Maximum distance for propagation to an unannotated gene (bp) |
+| | `--min-cluster-size` | 3 | Minimum number of genes in a cluster |
+| `run_enrichment_v2.py` | `--unit-mode` | `exclusive` | `exclusive`: a gene in a cluster is represented by its cluster only; `legacy`: counted as gene and as cluster |
+| | `--propagation-scope` | `BP` | `BP` drops propagated MF/CC rows; `all` keeps them |
+| | `--background-mode` | `community` | `community`: background list of the annotation tier; `focal`: all proteins of the focal genome (`--focal-background-file`) |
+| | `--min-term-size`, `--max-term-fraction` | 5, 0.1 | Term-size filter in evidence units (n >= 5 and n <= 10% of M) |
+| | `--fdr-alpha`, `--n-bootstrap` | 0.05, 2000 | Benjamini-Hochberg threshold; bootstrap replicates for the fold-enrichment interval |
+| | `--exclude-genes`, `--drop-propagation-from-genomes` | none | Sensitivity analyses: remove genes from the foreground, or remove the propagated rows of listed genomes |
+| | `--worked-example GO:xxxxxxx` | none | Print M, n, N, k and the contributing units for one BP term under both unit definitions |
+
+The output file names of `run_enrichment_v2.py` carry the settings used (e.g. `_uX_sBP_bcom` = exclusive units, BP-only
+propagation, community background).
 
 ## Reproducibility notes
 
@@ -159,18 +185,30 @@ Run any script with `--help` for the full list of options.
   to Biological Process (BP) GO terms. Molecular Function and Cellular Component annotations
   from direct sequence evidence (GBFF, InterProScan, eggNOG-mapper) are retained and used in
   enrichment analysis, but are not propagated across operon-like clusters.
-- The GMM operon-prediction threshold is fit independently per genome (see
-  `gmm_threshold_summary.tsv` under each taxon's `operon_analysis/` directory for the
-  distribution of fitted thresholds across all genomes analyzed). Genomes for which the fit
-  is degenerate (a single Gaussian component selected) are flagged rather than silently
-  excluded.
+- The GMM operon-prediction threshold is fit independently per genome. A one-dimensional GMM
+  is fitted to log(d + offset) of the distances between adjacent same-strand genes (distances
+  below `--outlier-threshold`); the number of components is chosen by BIC. The intra-operon
+  component is the one with the largest weight among the components whose mean does not
+  exceed the median of the component means, and the threshold is the largest distance assigned
+  to it (never below `--min-threshold`). Adjacency is strict: a gene on the opposite strand
+  between two genes breaks their adjacency. `gmm_threshold_summary.tsv` under each taxon's
+  `operon_analysis/` directory lists the threshold, K and the basis of the threshold
+  (`GMM`, `floor_applied`, `single_component_K1`, `default_too_few_distances`) for every
+  genome. Genomes for which a single Gaussian component is selected (K = 1) are flagged in
+  this file and excluded from clustering and propagation.
 - The permitted COG-category mismatch pairs used during operon cluster refinement are
   hard-coded as the `ALLOWED_MISMATCH_PAIRS` constant in `predict_and_analyze_operons.py`.
-- Every propagated GO annotation carries a provenance identifier (`Evidence_Group_ID`) that
-  traces it back to either its originating direct-evidence source (GBFF / InterPro / eggNOG)
-  or the specific operon-like cluster it was propagated within. Enrichment analysis treats
-  each such group as a single evidence unit, so co-propagated annotations are not counted as
-  independent observations.
+- Every GO annotation carries a provenance identifier (`Evidence_Group_ID`): one per gene and
+  term for direct evidence (GBFF / InterPro / eggNOG), and one per cluster (`<genome>_cluster<n>`)
+  for propagated annotations. Ancestor terms inherit the identifier of the term they were
+  expanded from. In the enrichment analysis the statistical unit is the evidence unit: a gene
+  that belongs to a propagation cluster is represented by its cluster, every other gene by
+  itself, and a unit carries a term if any member carries it. Co-propagated annotations are
+  therefore not counted as independent observations, and a gene with both direct and
+  propagated evidence for a term is counted once.
+- Enrichment is a one-sided hypergeometric test per GO namespace (and for InterPro entries),
+  with Benjamini-Hochberg correction within each namespace; the confidence interval of the fold
+  enrichment comes from a bootstrap over evidence units.
 
 ## License
 
